@@ -23,7 +23,7 @@ const (
 var (
 	dirPath   = filepath.Join(homeDir(), dir)
 	cachePath = filepath.Join(homeDir(), dir, ".cache")
-	root      = &cobra.Command{Use: "pls", Short: "Impressive Linux commands cheat sheet cli."}
+	root      = &cobra.Command{Use: "pls", Short: "Impressive Linux commands cheat sheet cli"}
 	cache     = new(Cache)
 )
 

@@ -14,7 +14,7 @@ func NewSearchCommand() *cobra.Command {
 		Short: "Search command by keywords",
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) == 0 {
-				fmt.Println("[sorry]: the search command does not accept any keywords")
+				fmt.Println("[sorry] the search command does not accept any keywords")
 				return
 			}
 			doSearch(args[0])

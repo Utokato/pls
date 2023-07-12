@@ -12,10 +12,10 @@ import (
 func NewShowCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "show <command>",
-		Short: "Show the specified command usage.",
+		Short: "Show the specified command usage",
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) == 0 {
-				fmt.Println("[sorry]: the show command does not accept any arguments")
+				fmt.Println("[sorry] the show command does not accept any arguments")
 				return
 			}
 			force, _ := cmd.Flags().GetBool("force")
@@ -32,9 +32,9 @@ func doShow(cmdName string, force bool) {
 	if force {
 		if err := command.FillSelf(cmdTemplate, cache.GetLatestVersion()); err != nil {
 			if err == ErrCommandNotFound {
-				fmt.Printf("[sorry]: could not found command <%s>\n", cmdName)
+				fmt.Printf("[sorry] could not found command <%s>\n", cmdName)
 			} else {
-				fmt.Printf("[sorry]: failed to download command <%s>\n", cmdName)
+				fmt.Printf("[sorry] failed to download command <%s>\n", cmdName)
 			}
 			return
 		}
@@ -42,18 +42,18 @@ func doShow(cmdName string, force bool) {
 		persistCache()
 	}
 	if !exist {
-		fmt.Printf("[sorry]: could not found command <%s>\n", cmdName)
+		fmt.Printf("[sorry] could not found command <%s>\n", cmdName)
 		return
 	}
 	// 将 .md 文件展示到控制台上
 	fp := path.Join(dirPath, fmt.Sprintf("%s.md", command.Name))
 	if !fileExist(fp) {
-		fmt.Printf("[sorry]: could not found command <%s>\n", cmdName)
+		fmt.Printf("[sorry] could not found command <%s>\n", cmdName)
 		return
 	}
 	source, err := os.ReadFile(fp)
 	if err != nil {
-		fmt.Printf("[sorry]: failed to open file <%s>\n", fp)
+		fmt.Printf("[sorry] failed to open file <%s>\n", fp)
 		return
 	}
 	markdown.BlueBgItalic = color.New(color.FgBlue).SprintFunc()

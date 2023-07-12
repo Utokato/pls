@@ -71,7 +71,7 @@ func fetchFileAndFillCache() {
 					atomic.AddInt64(&failed, 1)
 				}
 				atomic.AddInt64(&all, 1)
-				fmt.Printf("[busy working]: upgrade command:<%d/%d> => %s\n", atomic.LoadInt64(&all), len(cmds), item.Name)
+				fmt.Printf("[busy working] upgrade command:<%d/%d> => %s\n", atomic.LoadInt64(&all), len(cmds), item.Name)
 			}
 		}()
 	}
@@ -81,7 +81,7 @@ func fetchFileAndFillCache() {
 	}
 	close(ch)
 	wg.Wait()
-	fmt.Printf("[clap]: all commands are upgraded. All: %d, Failed: %d\n", all, failed)
+	fmt.Printf("[clap] all commands are upgraded. All: %d, Failed: %d\n", all, failed)
 }
 
 func homeDir() string {
