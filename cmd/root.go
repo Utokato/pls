@@ -14,7 +14,7 @@ const (
 )
 
 const (
-	version     = "1.14.0"
+	version     = "1.18.0"
 	rootUrl     = `https://unpkg.com/linux-command@%s`
 	pkgTemplate = rootUrl + "/command/"
 	cmdTemplate = rootUrl + "%s"
