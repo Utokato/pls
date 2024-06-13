@@ -39,13 +39,18 @@ type Detail struct {
 
 type Cmd struct {
 	Name string `json:"name"`
-	Path string `json:"path"`
+	Path string `json:"path"` // online 存储每个命令对应的 url， offline 该字段为空
 	Desc string `json:"desc"`
 }
 
 type Cache struct {
 	LatestVersion string          `json:"latestVersion"`
 	Cmds          map[string]*Cmd `json:"cmds"`
+}
+
+type Env struct {
+	Offline      bool `json:"offline"`
+	Decompressed bool `json:"decompressed"`
 }
 
 func (c *Cache) GetLatestVersion() string {
@@ -73,8 +78,7 @@ func (pkg *Package) GetCommandMaps() map[string]*Cmd {
 	return inner
 }
 
-// FillSelf 发起 Http 请求获取 .md 文件，将文件存储到本地中
-// 并读取到每个 .md 文件中描述信息，缓存到 Cmd 的 desc 字段中
+// FillSelf 发起 Http 请求获取 .md 文件
 func (cmd *Cmd) FillSelf(urlTemplate, latestVersion string) error {
 	url := fmt.Sprintf(urlTemplate, latestVersion, cmd.Path)
 	resp, err := http.Get(url)
@@ -86,8 +90,15 @@ func (cmd *Cmd) FillSelf(urlTemplate, latestVersion string) error {
 	}
 	body := resp.Body
 	defer body.Close()
+
+	return cmd.FillSelfByReader(resp.Body)
+}
+
+// FillSelfByReader 从 reader 中读取每个 .md 然后写入到本地
+// 并每个 .md 文件中描述信息，缓存到 Cmd 的 desc 字段中
+func (cmd *Cmd) FillSelfByReader(rc io.ReadCloser) error {
+	reader := bufio.NewReader(rc)
 	content := make([]byte, 0)
-	reader := bufio.NewReader(resp.Body)
 	idx := 0
 	for {
 		line, _, err := reader.ReadLine()
@@ -106,9 +117,5 @@ func (cmd *Cmd) FillSelf(urlTemplate, latestVersion string) error {
 		}
 	}
 	fp := path.Join(dirPath, fmt.Sprintf("%s.md", cmd.Name))
-	err = os.WriteFile(fp, content, 0666)
-	if err != nil {
-		return err
-	}
-	return nil
+	return os.WriteFile(fp, content, 0666)
 }

@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	markdown "github.com/MichaelMure/go-term-markdown"
 	"github.com/fatih/color"
@@ -29,9 +30,10 @@ func NewShowCommand() *cobra.Command {
 func doShow(cmdName string, force bool) {
 	cmds := cache.GetCmds()
 	command, exist := cmds[cmdName]
-	if force {
+	// only online mode can force refresh
+	if force && !env.Offline {
 		if err := command.FillSelf(cmdTemplate, cache.GetLatestVersion()); err != nil {
-			if err == ErrCommandNotFound {
+			if errors.Is(err, ErrCommandNotFound) {
 				fmt.Printf("[sorry] could not found command <%s>\n", cmdName)
 			} else {
 				fmt.Printf("[sorry] failed to download command <%s>\n", cmdName)

@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	plsVersion = "0.0.1"
+	plsVersion = "0.0.2"
 	dir        = ".commands"
 )
 
@@ -22,9 +22,12 @@ const (
 
 var (
 	dirPath   = filepath.Join(homeDir(), dir)
+	envPath   = filepath.Join(homeDir(), dir, ".env")
 	cachePath = filepath.Join(homeDir(), dir, ".cache")
-	root      = &cobra.Command{Use: "pls", Short: "Impressive Linux commands cheat sheet cli"}
-	cache     = new(Cache)
+
+	root  = &cobra.Command{Use: "pls", Short: "Impressive Linux commands cheat sheet cli"}
+	env   = new(Env)
+	cache = new(Cache)
 )
 
 // Execute all api entry.
@@ -42,24 +45,40 @@ func init() {
 			panic(err)
 		}
 	}
-	if fileExist(cachePath) {
-		parseCmdCache()
+
+	if fileExist(envPath) {
+		parseEnv()
 	} else {
-		fmt.Println("[busy working] Building cache...")
-		fetchAllAndCreateCache()
-		fetchFileAndFillCache()
-		persistCache()
+		fmt.Println("[tips] env info is not found, so setting it to online mode.")
+		setDefaultEnv()
+	}
+
+	if fileExist(cachePath) {
+		parseCache()
+	} else {
+		fmt.Println("[tips] cache info is not found, please use offline cmd to unzip resource or use upgrade cmd to update resource.")
 	}
 	// 构建 cobra 命令
 	root.AddCommand(
+		NewOfflineCommand(),
 		NewShowCommand(),
 		NewUpgradeCommand(),
 		NewVersionCommand(),
 		NewSearchCommand(),
+		NewClearCommand(),
 	)
 }
 
-func parseCmdCache() {
+func setDefaultEnv() {
+	persistEnv(false, false)
+}
+
+func parseCache() {
 	file, _ := os.ReadFile(cachePath)
 	_ = json.Unmarshal(file, cache)
+}
+
+func parseEnv() {
+	file, _ := os.ReadFile(envPath)
+	_ = json.Unmarshal(file, env)
 }

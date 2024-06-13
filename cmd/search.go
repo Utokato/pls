@@ -24,7 +24,6 @@ func NewSearchCommand() *cobra.Command {
 }
 
 func doSearch(keyword string) {
-	// 将 inner 转换为 table 展示到控制台上
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"command", "description"})
 	table.SetRowLine(true)
