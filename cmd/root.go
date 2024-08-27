@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	plsVersion = "0.0.2"
+	plsVersion = "1.0.1"
 	dir        = ".commands"
 )
 
@@ -33,7 +33,8 @@ var (
 // Execute all api entry.
 func Execute() {
 	if err := root.Execute(); err != nil {
-		panic(err)
+		// ignore error
+		// _ = root.Help()
 	}
 }
 
@@ -42,7 +43,7 @@ func init() {
 	if !fileExist(dirPath) {
 		err := makeCmdDir(dirPath)
 		if err != nil {
-			panic(err)
+			fmt.Println("[sorry] failed to create command dir")
 		}
 	}
 

@@ -29,8 +29,5 @@ func fileExist(path string) bool {
 }
 
 func makeCmdDir(dir string) error {
-	if _, err := os.Stat(dir); err != nil && !os.IsExist(err) {
-		return os.Mkdir(dir, 0755)
-	}
-	return nil
+	return os.MkdirAll(dir, 0755)
 }
