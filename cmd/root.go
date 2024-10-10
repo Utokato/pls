@@ -67,6 +67,7 @@ func init() {
 		NewVersionCommand(),
 		NewSearchCommand(),
 		NewClearCommand(),
+		NewServeCommand(),
 	)
 }
 

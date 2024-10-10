@@ -28,15 +28,15 @@ func doSearch(keyword string) {
 	table.SetHeader([]string{"command", "description"})
 	table.SetRowLine(true)
 	keyword = strings.ToLower(keyword)
-	for key, value := range cache.GetCmds() {
-		key = strings.ToLower(key)
-		if strings.Contains(key, keyword) {
-			table.Append([]string{value.Name, value.Desc})
+	for k, v := range cache.GetCmds() {
+		k = strings.ToLower(k)
+		if strings.Contains(k, keyword) {
+			table.Append([]string{v.Name, v.Desc})
 			continue
 		}
-		desc := strings.ToLower(value.Desc)
+		desc := strings.ToLower(v.Desc)
 		if strings.Contains(desc, keyword) {
-			table.Append([]string{value.Name, value.Desc})
+			table.Append([]string{v.Name, v.Desc})
 			continue
 		}
 	}
