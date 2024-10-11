@@ -8,7 +8,9 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"pls/offline"
 	"pls/resp"
+	"pls/util"
 	"strings"
 )
 
@@ -29,6 +31,13 @@ func NewServeCommand() *cobra.Command {
 func doServe() {
 	if !isPortAvailable(port) {
 		fmt.Println("[sorry] port is not available")
+		return
+	}
+
+	// 释放静态资源
+	err := util.UnarchivedTarGz(offline.Dist, ".")
+	if err != nil {
+		fmt.Println("[sorry] failed to extract dist.tar.gz")
 		return
 	}
 
