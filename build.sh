@@ -15,9 +15,3 @@ echo "Building go app..."
 go env -w GOOS=linux
 go build -o bin/pls main.go
 echo "Build go app success!"
-
-# 清理文件
-echo "Cleaning files..."
-rm -rf web/dist
-rm -rf offline/dist.tar.gz
-echo "Cleaned files..."

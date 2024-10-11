@@ -56,9 +56,8 @@ onUnmounted(() => {
 
 <template>
 
-  <el-row>
-    <el-col :span="8"/>
-    <el-col :span="8">
+  <el-row justify="center">
+    <el-col :xs="20" :sm="16" :md="16" :lg="12" :xl="12">
       <div class="logo-container" @click="doReset">
         <svg width="183px" height="48px" viewBox="0 0 183 48">
           <title>logo</title>
@@ -79,18 +78,17 @@ onUnmounted(() => {
         <el-input v-model="keyword" size="large" placeholder="Linux 命令搜索"/>
         <el-button type="primary" @click="doSearch" @keydown.enter="keyDown" size="large">搜索</el-button>
       </div>
-
-      <el-table v-show="searchResult.length !== 0" :data="searchResult" stripe style="width: 100%">
+      <el-divider v-show="searchResult.length !== 0" />
+      <el-table v-show="searchResult.length !== 0" :table-layout="'fixed'" :data="searchResult" stripe style="width: 100%">
         <el-table-column prop="name" label="名称" width="180"/>
-        <el-table-column prop="desc" label="描述" width="180"/>
-        <el-table-column fixed="right" label="操作" min-width="30">
+        <el-table-column prop="desc" label="描述" />
+        <el-table-column fixed="right" label="操作" width="60" min-width="60">
           <template #default="scope">
-            <el-button link type="primary" size="small" @click="details(scope.row)">查看详情</el-button>
+            <el-button link type="primary" size="small" @click="details(scope.row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-col>
-    <el-col :span="8"/>
   </el-row>
 </template>
 
