@@ -27,3 +27,19 @@ pls offline
 pls search 压缩
 pls show zip
 ```
+
+4. web server
+```shell
+pls serve
+```
+visit http://localhost:6023
+
+Run web server with nohup
+```shell
+nohup pls serve > pls.log 2>&1 &
+```
+
+5. other
+
+Details with `bin/start.sh`
+
