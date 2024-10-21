@@ -16,16 +16,17 @@ import (
 
 const port = 10321
 
-func NewServeCommand() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:    "serve",
-		Short:  "Serve a web server",
-		Hidden: true,
-		Run: func(cmd *cobra.Command, args []string) {
-			doServe()
-		},
-	}
-	return cmd
+var serveCommand = &cobra.Command{
+	Use:    "serve",
+	Short:  "Serve a web server",
+	Hidden: true,
+	Run: func(cmd *cobra.Command, args []string) {
+		doServe()
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(serveCommand)
 }
 
 func doServe() {

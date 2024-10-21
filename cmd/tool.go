@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/mitchellh/go-homedir"
 	"os"
 )
 
@@ -19,7 +18,7 @@ func persistEnv(offline bool, decompressed bool) {
 }
 
 func homeDir() string {
-	home, _ := homedir.Expand("~")
+	home, _ := os.UserHomeDir()
 	return home
 }
 

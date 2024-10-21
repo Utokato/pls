@@ -10,21 +10,25 @@ import (
 	"path"
 )
 
-func NewShowCommand() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "show <command>",
-		Short: "Show the specified command usage",
-		Run: func(cmd *cobra.Command, args []string) {
-			if len(args) == 0 {
-				fmt.Println("[sorry] the show command does not accept any arguments")
-				return
-			}
-			force, _ := cmd.Flags().GetBool("force")
-			doShow(args[0], force)
-		},
-	}
-	cmd.Flags().BoolP("force", "f", false, "force to refresh command usage from remote.")
-	return cmd
+var showCommand = &cobra.Command{
+	Use:   "show <command>",
+	Short: "Show the specified command usage",
+	Args:  cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			fmt.Println("[sorry] the show command does not accept any arguments")
+			return
+		}
+
+		force, _ := cmd.Flags().GetBool("force")
+		doShow(args[0], force)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(showCommand)
+
+	showCommand.Flags().BoolP("force", "f", false, "force to refresh command usage from remote.")
 }
 
 func doShow(cmdName string, force bool) {

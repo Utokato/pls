@@ -14,15 +14,16 @@ import (
 	"sync/atomic"
 )
 
-func NewUpgradeCommand() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "upgrade",
-		Short: "Upgrade all commands from remote",
-		Run: func(cmd *cobra.Command, args []string) {
-			doUpgrade()
-		},
-	}
-	return cmd
+var upgradeCommand = &cobra.Command{
+	Use:   "upgrade",
+	Short: "Upgrade all commands from remote",
+	Run: func(cmd *cobra.Command, args []string) {
+		doUpgrade()
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(upgradeCommand)
 }
 
 func doUpgrade() {

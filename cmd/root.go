@@ -25,16 +25,19 @@ var (
 	envPath   = filepath.Join(homeDir(), dir, ".env")
 	cachePath = filepath.Join(homeDir(), dir, ".cache")
 
-	root  = &cobra.Command{Use: "pls", Short: "Impressive Linux commands cheat sheet cli"}
 	env   = new(Env)
 	cache = new(Cache)
 )
 
+var rootCmd = &cobra.Command{
+	Use:   "pls",
+	Short: "Impressive Linux commands cheat sheet cli",
+}
+
 // Execute all api entry.
 func Execute() {
-	if err := root.Execute(); err != nil {
-		// ignore error
-		// _ = root.Help()
+	if err := rootCmd.Execute(); err != nil {
+		os.Exit(1)
 	}
 }
 
@@ -59,16 +62,6 @@ func init() {
 	} else {
 		fmt.Println("[tips] cache info is not found, please use offline cmd to unzip resource or use upgrade cmd to update resource.")
 	}
-	// 构建 cobra 命令
-	root.AddCommand(
-		NewOfflineCommand(),
-		NewShowCommand(),
-		NewUpgradeCommand(),
-		NewVersionCommand(),
-		NewSearchCommand(),
-		NewClearCommand(),
-		NewServeCommand(),
-	)
 }
 
 func setDefaultEnv() {

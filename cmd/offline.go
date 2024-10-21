@@ -10,29 +10,29 @@ import (
 	"pls/offline"
 )
 
-func NewOfflineCommand() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "offline <command>",
-		Short: "Set the current context to offline, and load infos from local",
-		Example: `  # Set offline ctx
-  pls offline
-  pls offline true
+var offlineCommand = &cobra.Command{
+	Use:   "offline <command>",
+	Short: "Set the current context to offline, and load infos from local",
+	Example: `# Set offline ctx
+pls offline
+pls offline true
 					
-  # Set online ctx
-  pls offline false
-  pls offline off`,
-		Run: func(cmd *cobra.Command, args []string) {
-			flag := true
-			if len(args) != 0 {
-				str := args[0]
-				if str == "false" || str == "off" {
-					flag = false
-				}
-			}
-			doSetOffline(flag)
-		},
-	}
-	return cmd
+# Set online ctx
+pls offline false
+pls offline off`,
+	Args: cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		flag := true
+		str := args[0]
+		if str == "false" || str == "off" {
+			flag = false
+		}
+		doSetOffline(flag)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(offlineCommand)
 }
 
 func doSetOffline(flag bool) {

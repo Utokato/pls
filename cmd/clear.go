@@ -6,15 +6,16 @@ import (
 	"os"
 )
 
-func NewClearCommand() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "clear",
-		Short: "Clear all info",
-		Run: func(cmd *cobra.Command, args []string) {
-			doClear()
-		},
-	}
-	return cmd
+var clearCommand = &cobra.Command{
+	Use:   "clear",
+	Short: "Clear all info",
+	Run: func(cmd *cobra.Command, args []string) {
+		doClear()
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(clearCommand)
 }
 
 func doClear() {

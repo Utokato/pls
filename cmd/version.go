@@ -5,15 +5,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func NewVersionCommand() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "version",
-		Short: "Prints the version of pls",
-		Run: func(cmd *cobra.Command, args []string) {
-			doVersion()
-		},
-	}
-	return cmd
+var versionCommand = &cobra.Command{
+	Use:   "version",
+	Short: "Prints the version of pls",
+	Run: func(cmd *cobra.Command, args []string) {
+		doVersion()
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(versionCommand)
 }
 
 func doVersion() {
