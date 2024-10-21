@@ -3,6 +3,7 @@
 # 编译前端应用
 echo "Building front end app..."
 cd web
+rm -rf ../offline/dist
 rm -rf dist
 pnpm build
 cd ..
