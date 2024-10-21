@@ -5,9 +5,8 @@ echo "Building front end app..."
 cd web
 rm -rf dist
 pnpm build
-tar -czvf dist.tar.gz dist
 cd ..
-mv web/dist.tar.gz offline/dist.tar.gz
+mv web/dist/ offline/dist/
 echo "Build front end app success!"
 
 # 编译 go 应用

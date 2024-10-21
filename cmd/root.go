@@ -22,8 +22,8 @@ const (
 
 var (
 	dirPath   = filepath.Join(homeDir(), dir)
-	envPath   = filepath.Join(homeDir(), dir, ".env")
-	cachePath = filepath.Join(homeDir(), dir, ".cache")
+	envPath   = filepath.Join(dirPath, ".env")
+	cachePath = filepath.Join(dirPath, ".cache")
 
 	env   = new(Env)
 	cache = new(Cache)
@@ -42,7 +42,6 @@ func Execute() {
 }
 
 func init() {
-	// 创建根目录
 	if !fileExist(dirPath) {
 		err := makeCmdDir(dirPath)
 		if err != nil {

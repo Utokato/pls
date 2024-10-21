@@ -22,3 +22,6 @@ go.work
 
 # IDEA
 .idea
+
+# frontend
+dist
