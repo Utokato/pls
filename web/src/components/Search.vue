@@ -82,7 +82,7 @@ onUnmounted(() => {
       <el-table v-show="searchResult.length !== 0" :table-layout="'fixed'" :data="searchResult" stripe style="width: 100%">
         <el-table-column prop="name" label="名称" width="180"/>
         <el-table-column prop="desc" label="描述" />
-        <el-table-column fixed="right" label="操作" width="60" min-width="60">
+        <el-table-column fixed="right" label="操作" width="120">
           <template #default="scope">
             <el-button link type="primary" size="small" @click="details(scope.row)">详情</el-button>
           </template>
